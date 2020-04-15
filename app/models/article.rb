@@ -23,6 +23,7 @@ class Article < ApplicationRecord
 
   has_many :comments
   belongs_to :user
+  belongs_to: publication
 
   validates :title, presence: true
   validates :content, presence: true

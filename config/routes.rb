@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :publications
   root 'articles#index'
   devise_for :users
   resources :comments
