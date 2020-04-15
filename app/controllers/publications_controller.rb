@@ -1,19 +1,30 @@
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
 
   # GET /publications
   # GET /publications.json
   def index
+    authorize Publication
     @publications = Publication.paginate(page: params[:page], per_page: params[:per_page] ||= 30).order(created_at: :desc)
+    respond_to do |format|
+      format.json { render json: Publication.all, status: :ok }
+      format.html {}
+    end
   end
 
   # GET /publications/1
   # GET /publications/1.json
   def show
+    respond_to do |format|
+      format.json { render json: @publication }
+      format.html { @publication }
+    end
   end
 
   # GET /publications/new
   def new
+    authorize Publication
     @publication = Publication.new
   end
 
