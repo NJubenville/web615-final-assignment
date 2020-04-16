@@ -5,6 +5,7 @@ class Publication < ApplicationRecord
   friendly_id :uuid, use: %i[slugged finders]
 
   has_many :articles
+  has_one :subscription
 
   validates :title, presence: true
 end

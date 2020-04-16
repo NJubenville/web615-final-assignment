@@ -23,10 +23,10 @@ require 'rails_helper'
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe PublicationsController, type: :controller do
+RSpec.describe SubscriptionsController, type: :controller do
 
   # This should return the minimal set of attributes required to create a valid
-  # Publication. As you add validations to Publication, be sure to
+  # Subscription. As you add validations to Subscription, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
@@ -38,12 +38,12 @@ RSpec.describe PublicationsController, type: :controller do
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
-  # PublicationsController. Be sure to keep this updated too.
+  # SubscriptionsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
   describe "GET #index" do
     it "returns a success response" do
-      Publication.create! valid_attributes
+      Subscription.create! valid_attributes
       get :index, params: {}, session: valid_session
       expect(response).to be_successful
     end
@@ -51,8 +51,8 @@ RSpec.describe PublicationsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      publication = Publication.create! valid_attributes
-      get :show, params: {id: publication.to_param}, session: valid_session
+      subscription = Subscription.create! valid_attributes
+      get :show, params: {id: subscription.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
@@ -66,30 +66,29 @@ RSpec.describe PublicationsController, type: :controller do
 
   describe "GET #edit" do
     it "returns a success response" do
-      publication = Publication.create! valid_attributes
-      get :edit, params: {id: publication.to_param}, session: valid_session
+      subscription = Subscription.create! valid_attributes
+      get :edit, params: {id: subscription.to_param}, session: valid_session
       expect(response).to be_successful
     end
   end
 
-
   describe "POST #create" do
     context "with valid params" do
-      it "creates a new Publication" do
+      it "creates a new Subscription" do
         expect {
-          post :create, params: {publication: valid_attributes}, session: valid_session
-        }.to change(Publication, :count).by(1)
+          post :create, params: {subscription: valid_attributes}, session: valid_session
+        }.to change(Subscription, :count).by(1)
       end
 
-      it "redirects to the created publication" do
-        post :create, params: {publication: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Publication.last)
+      it "redirects to the created subscription" do
+        post :create, params: {subscription: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(Subscription.last)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {publication: invalid_attributes}, session: valid_session
+        post :create, params: {subscription: invalid_attributes}, session: valid_session
         expect(response).to be_successful
       end
     end
@@ -101,41 +100,41 @@ RSpec.describe PublicationsController, type: :controller do
         skip("Add a hash of attributes valid for your model")
       }
 
-      it "updates the requested publication" do
-        publication = Publication.create! valid_attributes
-        put :update, params: {id: publication.to_param, publication: new_attributes}, session: valid_session
-        publication.reload
+      it "updates the requested subscription" do
+        subscription = Subscription.create! valid_attributes
+        put :update, params: {id: subscription.to_param, subscription: new_attributes}, session: valid_session
+        subscription.reload
         skip("Add assertions for updated state")
       end
 
-      it "redirects to the publication" do
-        publication = Publication.create! valid_attributes
-        put :update, params: {id: publication.to_param, publication: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(publication)
+      it "redirects to the subscription" do
+        subscription = Subscription.create! valid_attributes
+        put :update, params: {id: subscription.to_param, subscription: valid_attributes}, session: valid_session
+        expect(response).to redirect_to(subscription)
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        publication = Publication.create! valid_attributes
-        put :update, params: {id: publication.to_param, publication: invalid_attributes}, session: valid_session
+        subscription = Subscription.create! valid_attributes
+        put :update, params: {id: subscription.to_param, subscription: invalid_attributes}, session: valid_session
         expect(response).to be_successful
       end
     end
   end
 
   describe "DELETE #destroy" do
-    it "destroys the requested publication" do
-      publication = Publication.create! valid_attributes
+    it "destroys the requested subscription" do
+      subscription = Subscription.create! valid_attributes
       expect {
-        delete :destroy, params: {id: publication.to_param}, session: valid_session
-      }.to change(Publication, :count).by(-1)
+        delete :destroy, params: {id: subscription.to_param}, session: valid_session
+      }.to change(Subscription, :count).by(-1)
     end
 
-    it "redirects to the publications list" do
-      publication = Publication.create! valid_attributes
-      delete :destroy, params: {id: publication.to_param}, session: valid_session
-      expect(response).to redirect_to(publications_url)
+    it "redirects to the subscriptions list" do
+      subscription = Subscription.create! valid_attributes
+      delete :destroy, params: {id: subscription.to_param}, session: valid_session
+      expect(response).to redirect_to(subscriptions_url)
     end
   end
 
