@@ -13,12 +13,13 @@
 #  user_id    :integer
 #  uuid       :string
 #  slug       :string
-#
+#  publication_id :integer
 
 FactoryBot.define do
   factory :article do
     sequence(:title) { |n| "title_#{n}" }
     content { 'This is my content' }
     user
+    publication
   end
 end

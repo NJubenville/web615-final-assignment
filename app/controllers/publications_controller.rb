@@ -1,3 +1,4 @@
+
 class PublicationsController < ApplicationController
   before_action :set_publication, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
@@ -6,6 +7,7 @@ class PublicationsController < ApplicationController
   # GET /publications.json
   def index
     authorize Publication
+    # @publications = Publication.all
     @publications = Publication.paginate(page: params[:page], per_page: params[:per_page] ||= 30).order(created_at: :desc)
     respond_to do |format|
       format.json { render json: Publication.all, status: :ok }
@@ -36,6 +38,7 @@ class PublicationsController < ApplicationController
   # POST /publications.json
   def create
     @publication = Publication.new(publication_params)
+    authorize @publication
 
     respond_to do |format|
       if @publication.save
@@ -43,7 +46,7 @@ class PublicationsController < ApplicationController
         format.json { render :show, status: :created, location: @publication }
       else
         format.html { render :new }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
+        format.json { render json: @publication.errors, status: :bad_request }
       end
     end
   end
@@ -57,7 +60,7 @@ class PublicationsController < ApplicationController
         format.json { render :show, status: :ok, location: @publication }
       else
         format.html { render :edit }
-        format.json { render json: @publication.errors, status: :unprocessable_entity }
+        format.json { render json: @publication.errors, status: :bad_request }
       end
     end
   end
@@ -73,13 +76,23 @@ class PublicationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_publication
-      @publication = Publication.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_publication
+    begin
+      @publication = Publication.friendly.find(params[:id])
+    rescue
+      respond_to do |format|
+        format.json { render status: 404, json: { alert: "The publication you're looking for cannot be found" } }
+        format.html { redirect_to publications_path, alert: "The publication you're looking for cannot be found" }
+      end
     end
+    if @publication.present?
+      authorize @publication # Pass in Model object
+    end
+  end
 
-    # Only allow a list of trusted parameters through.
-    def publication_params
-      params.require(:publication).permit(:title)
-    end
+  # Only allow a list of trusted parameters through.
+  def publication_params
+    params.require(:publication).permit(:title)
+  end
 end

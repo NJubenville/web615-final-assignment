@@ -20,7 +20,7 @@ def create_seed_user(is_admin = false, first_name = Faker::Name.first_name, last
   user
 end
 
-def create_article(user = create_seed_user(true))
+def create_article(publication = create_publication, user = create_seed_user(true))
   article = Article.new
   article.title = "Will #{Faker::Company.name} really #{Faker::Company.bs}?"
   paragraph_1 = Faker::Lorem.paragraphs.join(' ')
@@ -28,12 +28,24 @@ def create_article(user = create_seed_user(true))
   paragraph_3 = Faker::Hipster.paragraphs.join(' ')
   article.content = "#{paragraph_1} <br /> #{paragraph_2} <br /> #{paragraph_3}"
   article.user = user
+  article.publication = publication
   if article.save
     p "#{article.title} has been saved"
   else
     raise "#{article.errors.full_messages}"
   end
   article
+end
+
+def create_publication
+  publication = Publication.new
+  publication.title = "Publication Title"
+
+  if publication.save
+    p "#{publication.title} has been saved"
+  else
+    raise "#{publication.errors.full_messages}"
+  end
 end
 
 def create_comment(article = create_article, user = create_seed_user)
@@ -53,9 +65,11 @@ end
 Comment.all.destroy_all
 Article.all.destroy_all
 User.all.destroy_all
+Publication.all.destory_all
 
 (1 .. 100).each do |_i|
-  article = create_article
+  publication = create_publication
+  article = create_article(publication)
   if article.save
     (1 .. 10).each do |_ii|
       create_comment(article)

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+
 require 'rails_helper'
 model_name = 'Article'
 controller_name = "#{model_name.pluralize}Controller".camelize.constantize

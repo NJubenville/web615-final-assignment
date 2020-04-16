@@ -18,17 +18,13 @@
         <% @publications.each do |publication| %>
           <tr>
             <td><%= publication.title %></td>
-            <% if policy(publication).show? %>
-              <td><%= link_to 'Show', publication %></td>
-            <%end %>
 
-            <% if policy(publication).edit? %>
-              <td><%= link_to 'Edit', edit_publication_path(publication) %></td>
-            <%end %>
+            <td><%= link_to 'Show', publication %></td>
 
-            <% if policy(publication).destroy? %>
-              <td><%= link_to 'Destroy', publication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <%end %>
+            <td><%= link_to 'Edit', edit_publication_path(publication) %></td>
+
+            <td><%= link_to 'Destroy', publication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
           </tr>
         <% end %>
 
