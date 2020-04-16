@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-
 RSpec.describe "Subscription", type: :request do
   before(:each) do
     @user = FactoryBot.create(:admin) # Create the user
+    @publication = FactoryBot.create(:publication)
 
     visit root_path
     expect(current_path).to eq(new_user_session_path)
@@ -53,6 +53,7 @@ RSpec.describe "Subscription", type: :request do
       end
     end
 
+
     describe 'invalid: ' do
       it 'should not return a subscription if one does not exist' do
         visit subscription_path(99_999)
@@ -72,6 +73,8 @@ RSpec.describe "Subscription", type: :request do
         expect(current_path).to eq(new_subscription_path)
 
         fill_in 'subscription_title', with: 'New_Subscription'
+        select @publication.title, from: 'subscription[publication_id]'
+
         click_button 'Create Subscription'
         # save_and_open_page
         expect(page).to have_content('Subscription was successfully created.')
@@ -127,7 +130,7 @@ RSpec.describe "Subscription", type: :request do
     describe 'invalid: ' do
       it 'should not update a subscription with invalid attributes' do
         @subscription = FactoryBot.create(:subscription)
-        click_link 'Publications'
+        click_link 'Subscriptions'
         expect(current_path).to eq(subscriptions_path)
 
         expect(page).to have_content(@subscription.title)
@@ -153,7 +156,7 @@ RSpec.describe "Subscription", type: :request do
     describe 'valid: ' do
       it 'should destroy a subscription when destroy is clicked' do
         @subscription = FactoryBot.create(:subscription)
-        click_link 'Publications'
+        click_link 'Subscriptions'
         expect(current_path).to eq(subscriptions_path)
 
         expect(page).to have_content(@subscription.title)

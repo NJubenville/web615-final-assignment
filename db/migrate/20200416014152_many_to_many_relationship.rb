@@ -1,8 +1,8 @@
 class ManyToManyRelationship < ActiveRecord::Migration[5.2]
   def change
-    create_table :subscription_users do |t|
-      t.belongs_to :subscription
-      t.belongs_to :user
+    create_join_table :subscriptions, :users do |t|
+      #t.index :subscription_id
+      #t.index :user_id
     end
   end
 end

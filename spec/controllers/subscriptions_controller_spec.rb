@@ -59,7 +59,7 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {subscription: valid_attributes}, session: valid_session
       expect(response).to be_successful
     end
   end

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
-def create_seed_user(is_admin = false, first_name = Faker::Name.first_name, last_name = Faker::Name.last_name, email = nil)
+def create_seed_user(is_admin = false,
+                     first_name = Faker::Name.first_name,
+                     last_name = Faker::Name.last_name,
+                     email = nil)
   full_name = "#{first_name} #{last_name}"
   final_email = email ||= Faker::Internet.safe_email(name: full_name)
   p "Final Email: #{final_email}"
@@ -37,30 +40,6 @@ def create_article(publication = create_publication, user = create_seed_user(tru
   article
 end
 
-def create_publication
-  publication = Publication.new
-  publication.title = Faker::Lorem.word
-
-  if publication.save
-    p "Publication #{publication.title} has been saved"
-  else
-    raise "#{publication.errors.full_messages}"
-  end
-  publication
-end
-
-def create_subscription(publication = create_publication, user = create_seed_user)
-  subscription = Subscription.new
-  subscription.title = Faker::Lorem.word
-  subscription.publication = publication
-  if subscription.save
-    p "Subscription #{subscription.title} has been saved"
-  else
-    raise "#{subscription.errors.full_messages}"
-  end
-  subscription
-end
-
 def create_comment(article = create_article, user = create_seed_user)
   comment = Comment.new
   comment.article = article
@@ -75,25 +54,56 @@ def create_comment(article = create_article, user = create_seed_user)
 
 end
 
+def create_publication
+  publication = Publication.new
+  publication.title = Faker::Lorem.word
+  if publication.save
+    p "Publication #{publication.title} has been saved"
+  else
+    raise "#{publication.errors.full_messages}"
+  end
+  publication
+end
+
+def create_subscription(publication = create_publication, user = create_seed_user)
+  subscription = Subscription.new
+  subscription.title = publication.title + ' Subscription'
+  subscription.publication = publication
+  #subscription.user_ids = user.id
+  if subscription.save
+    p "Subscription #{subscription.title} has been saved"
+  else
+    raise "#{subscription.errors.full_messages}"
+  end
+  subscription
+end
+
 Comment.all.destroy_all
 Article.all.destroy_all
-User.all.destroy_all
-Subscription.all.destroy_all
 Publication.all.destroy_all
+Subscription.all.destroy_all
+User.all.destroy_all
 
-(1 .. 10).each do |_i|
-  publication = create_publication
-    subscription = create_subscription(publication)
-    if subscription.save
-      article = create_article(publication)
-      if article.save
-        (1 .. 10).each do |_ii|
-          create_comment(article)
+(1..5).each do |_i|
+  user = create_seed_user
+  if user.save
+    (1..5).each do |_i|
+      publication = create_publication
+      if publication.save
+        subscription = create_subscription(publication, user)
+        if subscription.save
+          (1..5).each do |_iii|
+            article = create_article(publication)
+            if article.save
+              (1..5).each do |_iv|
+                create_comment(article)
+              end
+            end
+          end
         end
       end
-
+    end
   end
-
 end
 
 # This is to create the admin users

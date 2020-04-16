@@ -58,13 +58,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_014152) do
     t.string "slug"
   end
 
-  create_table "subscription_users", force: :cascade do |t|
-    t.bigint "subscription_id"
-    t.bigint "user_id"
-    t.index ["subscription_id"], name: "index_subscription_users_on_subscription_id"
-    t.index ["user_id"], name: "index_subscription_users_on_user_id"
-  end
-
   create_table "subscriptions", force: :cascade do |t|
     t.string "title"
     t.integer "publication_id"
@@ -72,6 +65,11 @@ ActiveRecord::Schema.define(version: 2020_04_16_014152) do
     t.datetime "updated_at", null: false
     t.string "uuid"
     t.string "slug"
+  end
+
+  create_table "subscriptions_users", id: false, force: :cascade do |t|
+    t.bigint "subscription_id", null: false
+    t.bigint "user_id", null: false
   end
 
   create_table "users", force: :cascade do |t|

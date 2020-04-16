@@ -4,8 +4,8 @@ class Subscription < ApplicationRecord
   friendly_id :uuid, use: %i[slugged finders]
 
   belongs_to :publication
-  has_and_belongs_to_many :user
+  has_and_belongs_to_many :users
 
   validates :title, presence: true
-  validates_uniqueness_of :user_id
+
 end
