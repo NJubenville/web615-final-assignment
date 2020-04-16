@@ -2,10 +2,10 @@ language: ruby
 rvm:
   - 2.6.0
 jobs:
-  - install:
-    - bin/setup
-      
+
+
   - script:
+    - bin/setup
     - sudo docker-compose exec guard rspec
     - rubocop
     - bundle-audit
