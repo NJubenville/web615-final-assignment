@@ -11,6 +11,15 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :subscription_title %>
+  </div>
+
+  <div class="field">
+    <%= form.collection_select :user_id, User.all, :id, :email %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>

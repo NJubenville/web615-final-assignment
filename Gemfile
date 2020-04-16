@@ -11,6 +11,8 @@ gem 'pundit' # Lab 10
 
 gem 'friendly_id', '~> 5.1.0' # Lab 9
 
+gem 'rubocop', require: false
+
 # Statistics tracking
 gem 'newrelic_rpm'
 gem 'rack-tracker'
