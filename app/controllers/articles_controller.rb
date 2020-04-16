@@ -108,7 +108,7 @@ class ArticlesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def article_params
-    params.require(:article).permit(:title, :content, :category, :user_id)
+    params.require(:article).permit(:title, :content, :category, :user_id, :publication_id)
     # Students, make sure to add the user_id parameter as a symbol here ^^^^^^
   end
 end

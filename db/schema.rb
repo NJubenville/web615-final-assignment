@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 2020_04_16_014152) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
+    t.string "title"
+    t.integer "publication_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "uuid"

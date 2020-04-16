@@ -43,7 +43,7 @@ class PublicationsController < ApplicationController
     respond_to do |format|
       if @publication.save
         format.html { redirect_to @publication, notice: 'Publication was successfully created.' }
-        format.json { render :show, status: :created, location: @publication }
+        format.json { render json: @publication, status: :created }
       else
         format.html { render :new }
         format.json { render json: @publication.errors, status: :bad_request }

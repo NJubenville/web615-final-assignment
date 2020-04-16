@@ -39,13 +39,26 @@ end
 
 def create_publication
   publication = Publication.new
-  publication.title = "Publication Title"
+  publication.title = Faker::Lorem.word
 
   if publication.save
-    p "#{publication.title} has been saved"
+    p "Publication #{publication.title} has been saved"
   else
     raise "#{publication.errors.full_messages}"
   end
+  publication
+end
+
+def create_subscription(publication = create_publication, user = create_seed_user)
+  subscription = Subscription.new
+  subscription.title = Faker::Lorem.word
+  subscription.publication = publication
+  if subscription.save
+    p "Subscription #{subscription.title} has been saved"
+  else
+    raise "#{subscription.errors.full_messages}"
+  end
+  subscription
 end
 
 def create_comment(article = create_article, user = create_seed_user)
@@ -65,16 +78,22 @@ end
 Comment.all.destroy_all
 Article.all.destroy_all
 User.all.destroy_all
-Publication.all.destory_all
+Subscription.all.destroy_all
+Publication.all.destroy_all
 
-(1 .. 100).each do |_i|
+(1 .. 10).each do |_i|
   publication = create_publication
-  article = create_article(publication)
-  if article.save
-    (1 .. 10).each do |_ii|
-      create_comment(article)
-    end
+    subscription = create_subscription(publication)
+    if subscription.save
+      article = create_article(publication)
+      if article.save
+        (1 .. 10).each do |_ii|
+          create_comment(article)
+        end
+      end
+
   end
+
 end
 
 # This is to create the admin users

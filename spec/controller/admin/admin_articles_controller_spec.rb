@@ -10,6 +10,7 @@ RSpec.describe controller_name, type: :controller do
 
   before(:each) do
     @user = FactoryBot.create(:admin)
+    @publication = FactoryBot.create(:publication)
     request.env['HTTP_ACCEPT'] = 'application/json'
   end
 
@@ -65,7 +66,9 @@ RSpec.describe controller_name, type: :controller do
           "#{model_name.parameterize.underscore.to_sym}": {
             title: SecureRandom.uuid,
             content: SecureRandom.uuid,
-            user_id: @user.id
+            category: 'test',
+            user_id: @user.id,
+            publication_id: @publication.id
           }
         }
 

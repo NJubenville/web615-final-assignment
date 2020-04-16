@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Articles', type: :request do
   before(:each) do
     @user = FactoryBot.create(:admin) # Create the user
-
+    @publication = FactoryBot.create(:publication)
     # Set up the basic premise of the test by making sure that you have to log in
     visit root_path
     expect(current_path).to eq(new_user_session_path)
@@ -72,6 +72,7 @@ RSpec.describe 'Articles', type: :request do
     end
   end
 
+
   describe 'GET #new' do
     describe 'valid: ' do
       it 'should create a new article with valid attributes' do
@@ -84,6 +85,8 @@ RSpec.describe 'Articles', type: :request do
         fill_in 'article_title', with: 'New_Article'
         fill_in 'article_content', with: 'New_content_with_a_lot_of_typing'
         select @user.email, from: 'article[user_id]'
+        select @publication.title, from: 'article[publication_id]'
+
         click_button 'Create Article'
         # save_and_open_page
         expect(page).to have_content('Article was successfully created.')
