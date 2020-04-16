@@ -35,7 +35,8 @@ RSpec.describe "Publications", type: :request do
       # Since there's no real invalid version of this test we skip it
     end
   end
-  
+
+
   describe 'GET #show' do
     describe 'valid: ' do
       it 'should return a publication' do

@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_014152) do
     t.string "slug"
   end
 
-  create_table "subscription_users", id: false, force: :cascade do |t|
+  create_table "subscription_users", force: :cascade do |t|
     t.bigint "subscription_id"
     t.bigint "user_id"
     t.index ["subscription_id"], name: "index_subscription_users_on_subscription_id"
