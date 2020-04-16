@@ -1,19 +1,30 @@
 class SubscriptionsController < ApplicationController
   before_action :set_subscription, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
 
   # GET /subscriptions
   # GET /subscriptions.json
   def index
     @subscriptions = Subscription.paginate(page: params[:page], per_page: params[:per_page] ||= 30).order(created_at: :desc)
+    authorize Subscription
+    respond_to do |format|
+      format.json { render json: Subscription.all, status: :ok }
+      format.html {}
+    end
   end
 
   # GET /subscriptions/1
   # GET /subscriptions/1.json
   def show
+    respond_to do |format|
+      format.json { render json: @subscription }
+      format.html { @subscription }
+    end
   end
 
   # GET /subscriptions/new
   def new
+    authorize Subscription
     @subscription = Subscription.new
   end
 
@@ -25,6 +36,7 @@ class SubscriptionsController < ApplicationController
   # POST /subscriptions.json
   def create
     @subscription = Subscription.new(subscription_params)
+    authorize @subscription
 
     respond_to do |format|
       if @subscription.save
@@ -32,7 +44,7 @@ class SubscriptionsController < ApplicationController
         format.json { render :show, status: :created, location: @subscription }
       else
         format.html { render :new }
-        format.json { render json: @subscription.errors, status: :unprocessable_entity }
+        format.json { render json: @subscription.errors, status: :bad_request }
       end
     end
   end
@@ -64,11 +76,21 @@ class SubscriptionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_subscription
-      @subscription = Subscription.find(params[:id])
+      begin
+        @subscription = Subscription.friendly.find(params[:id])
+      rescue
+        respond_to do |format|
+          format.json { render status: 404, json: { alert: "The subscription you're looking for cannot be found" } }
+          format.html { redirect_to subscriptions_path, alert: "The subscription you're looking for cannot be found" }
+        end
+      end
+      if @subscription.present?
+        authorize @subscription # Pass in Model object
+      end
     end
 
     # Only allow a list of trusted parameters through.
     def subscription_params
-      params.fetch(:subscription, {})
+      params.require(:subscription).permit(:title)
     end
 end
