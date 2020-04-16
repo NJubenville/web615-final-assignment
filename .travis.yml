@@ -1,13 +1,17 @@
 language: ruby
 rvm:
   - 2.6.0
-jobs:
+
+before_script:
+  - bin/setup
+
+script:
+  - sudo docker-compose exec guard rspec
+  - rubocop
+  - bundle-audit
 
 
-  - script:
-    - bin/setup
-    - sudo docker-compose exec guard rspec
-    - rubocop
-    - bundle-audit
-
-
+deploy:
+  provider: heroku
+  api_key:
+    secure: "ENCRYPTED_API_KEY"

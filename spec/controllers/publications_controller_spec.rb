@@ -29,7 +29,9 @@ RSpec.describe PublicationsController, type: :controller do
   # Publication. As you add validations to Publication, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    #skip("Add a hash of attributes valid for your model")
+    #{title: 'Title'}
+    #
+     skip("Add a hash of attributes valid for your model")
   }
 
   let(:invalid_attributes) {
