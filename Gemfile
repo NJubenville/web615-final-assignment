@@ -13,6 +13,8 @@ gem 'friendly_id', '~> 5.1.0' # Lab 9
 
 gem 'rubocop', require: false
 
+gem 'travis'
+
 # Statistics tracking
 gem 'newrelic_rpm'
 gem 'rack-tracker'
