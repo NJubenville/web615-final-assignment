@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Subscription", type: :request do
+RSpec.describe 'Subscription', type: :request do
   before(:each) do
     @user = FactoryBot.create(:admin) # Create the user
     @publication = FactoryBot.create(:publication)
@@ -53,7 +55,6 @@ RSpec.describe "Subscription", type: :request do
       end
     end
 
-
     describe 'invalid: ' do
       it 'should not return a subscription if one does not exist' do
         visit subscription_path(99_999)
@@ -81,7 +82,6 @@ RSpec.describe "Subscription", type: :request do
         expect(page).to have_content('New_Subscription')
       end
     end
-
 
     describe 'invalid: ' do
       it 'should not create a new subscription with invalid attributes' do

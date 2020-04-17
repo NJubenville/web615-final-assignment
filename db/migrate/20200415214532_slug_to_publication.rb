@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SlugToPublication < ActiveRecord::Migration[5.2]
   def change
     add_column :publications, :uuid, :string, unique: true, index: true

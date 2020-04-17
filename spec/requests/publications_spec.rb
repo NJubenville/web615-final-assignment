@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-
-RSpec.describe "Publications", type: :request do
+RSpec.describe 'Publications', type: :request do
   before(:each) do
     @user = FactoryBot.create(:admin) # Create the user
 
@@ -35,7 +36,6 @@ RSpec.describe "Publications", type: :request do
       # Since there's no real invalid version of this test we skip it
     end
   end
-
 
   describe 'GET #show' do
     describe 'valid: ' do
@@ -79,7 +79,6 @@ RSpec.describe "Publications", type: :request do
         expect(page).to have_content('New_Publication')
       end
     end
-
 
     describe 'invalid: ' do
       it 'should not create a new publication with invalid attributes' do
@@ -167,4 +166,3 @@ RSpec.describe "Publications", type: :request do
     end
   end
 end
-

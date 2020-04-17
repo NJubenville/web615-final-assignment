@@ -59,13 +59,13 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   # Testing System
+  gem 'awesome_print', require: false
   gem 'capybara', '~> 2.13'
+  gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'rspec-rails', '~> 3.7'
   gem 'selenium-webdriver'
-  gem "awesome_print", require: false
-  gem 'database_cleaner'
 end
 
 group :test do

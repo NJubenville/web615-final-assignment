@@ -72,7 +72,6 @@ RSpec.describe 'Articles', type: :request do
     end
   end
 
-
   describe 'GET #new' do
     describe 'valid: ' do
       it 'should create a new article with valid attributes' do

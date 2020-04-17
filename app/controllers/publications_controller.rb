@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 
 class PublicationsController < ApplicationController
-  before_action :set_publication, only: [:show, :edit, :update, :destroy]
+  before_action :set_publication, only: %i[show edit update destroy]
   after_action :verify_authorized
 
   # GET /publications
@@ -31,8 +32,7 @@ class PublicationsController < ApplicationController
   end
 
   # GET /publications/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /publications
   # POST /publications.json
@@ -76,11 +76,12 @@ class PublicationsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_publication
     begin
       @publication = Publication.friendly.find(params[:id])
-    rescue
+    rescue StandardError
       respond_to do |format|
         format.json { render status: 404, json: { alert: "The publication you're looking for cannot be found" } }
         format.html { redirect_to publications_path, alert: "The publication you're looking for cannot be found" }

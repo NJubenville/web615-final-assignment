@@ -69,7 +69,7 @@ RSpec.describe controller_name, type: :controller do
             user_id: @user.id,
             publication_id: @publication.id
 
-        }
+          }
         }
 
         post :create, params: params

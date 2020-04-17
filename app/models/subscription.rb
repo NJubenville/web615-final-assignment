@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Subscription < ApplicationRecord
   extend FriendlyId
 
@@ -7,5 +9,4 @@ class Subscription < ApplicationRecord
   has_and_belongs_to_many :users
 
   validates :title, presence: true
-
 end

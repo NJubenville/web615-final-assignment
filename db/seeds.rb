@@ -9,14 +9,12 @@ def create_seed_user(is_admin = false,
   p "Final Email: #{final_email}"
   user = User.find_or_initialize_by(email: final_email.downcase)
   if user.new_record?
-    user.password = "test1234"
-    if is_admin
-      user.role = User::ADMIN_ROLE
-    end
+    user.password = 'test1234'
+    user.role = User::ADMIN_ROLE if is_admin
     if user.save
       p "User:    #{final_email} has been saved for #{first_name} #{last_name}"
     else
-      raise "#{user.errors.full_messages}"
+      raise user.errors.full_messages.to_s
     end
   end
 
@@ -35,7 +33,7 @@ def create_article(publication = create_publication, user = create_seed_user(tru
   if article.save
     p "#{article.title} has been saved"
   else
-    raise "#{article.errors.full_messages}"
+    raise article.errors.full_messages.to_s
   end
   article
 end
@@ -49,9 +47,8 @@ def create_comment(article = create_article, user = create_seed_user)
     comment
     p "Comment #{comment.uuid} has been saved for article #{article.title}"
   else
-    raise "#{comment.errors.full_messages}"
+    raise comment.errors.full_messages.to_s
   end
-
 end
 
 def create_publication
@@ -60,7 +57,7 @@ def create_publication
   if publication.save
     p "Publication #{publication.title} has been saved"
   else
-    raise "#{publication.errors.full_messages}"
+    raise publication.errors.full_messages.to_s
   end
   publication
 end
@@ -73,7 +70,7 @@ def create_subscription(publication = create_publication, user = create_seed_use
   if subscription.save
     p "Subscription #{subscription.title} has been saved"
   else
-    raise "#{subscription.errors.full_messages}"
+    raise subscription.errors.full_messages.to_s
   end
   subscription
 end
@@ -86,21 +83,21 @@ User.all.destroy_all
 
 (1..5).each do |_i|
   user = create_seed_user
-  if user.save
-    (1..5).each do |_i|
-      publication = create_publication
-      if publication.save
-        subscription = create_subscription(publication, user)
-        if subscription.save
-          (1..5).each do |_iii|
-            article = create_article(publication)
-            if article.save
-              (1..5).each do |_iv|
-                create_comment(article)
-              end
-            end
-          end
-        end
+  next unless user.save
+
+  (1..5).each do |_i|
+    publication = create_publication
+    next unless publication.save
+
+    subscription = create_subscription(publication, user)
+    next unless subscription.save
+
+    (1..5).each do |_iii|
+      article = create_article(publication)
+      next unless article.save
+
+      (1..5).each do |_iv|
+        create_comment(article)
       end
     end
   end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class SubscriptionsController < ApplicationController
-  before_action :set_subscription, only: [:show, :edit, :update, :destroy]
+  before_action :set_subscription, only: %i[show edit update destroy]
   after_action :verify_authorized
 
   # GET /subscriptions
@@ -29,8 +31,7 @@ class SubscriptionsController < ApplicationController
   end
 
   # GET /subscriptions/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /subscriptions
   # POST /subscriptions.json
@@ -74,23 +75,24 @@ class SubscriptionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subscription
-      begin
-        @subscription = Subscription.friendly.find(params[:id])
-      rescue
-        respond_to do |format|
-          format.json { render status: 404, json: { alert: "The subscription you're looking for cannot be found" } }
-          format.html { redirect_to subscriptions_path, alert: "The subscription you're looking for cannot be found" }
-        end
-      end
-      if @subscription.present?
-        authorize @subscription # Pass in Model object
-      end
-    end
 
-    # Only allow a list of trusted parameters through.
-    def subscription_params
-      params.require(:subscription).permit(:title, :publication_id)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_subscription
+    begin
+      @subscription = Subscription.friendly.find(params[:id])
+    rescue StandardError
+      respond_to do |format|
+        format.json { render status: 404, json: { alert: "The subscription you're looking for cannot be found" } }
+        format.html { redirect_to subscriptions_path, alert: "The subscription you're looking for cannot be found" }
+      end
     end
+    if @subscription.present?
+      authorize @subscription # Pass in Model object
+    end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def subscription_params
+    params.require(:subscription).permit(:title, :publication_id)
+  end
 end

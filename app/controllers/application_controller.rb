@@ -11,12 +11,11 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized
     json_response = {}
-    json_response["error"] = "You are forbidden to perform this action"
+    json_response['error'] = 'You are forbidden to perform this action'
     flash[:alert] = 'You are not authorized to perform this action.'
     respond_to do |format|
       format.html { redirect_to(request.referrer || root_path) }
       format.json { render json: json_response, status: :forbidden }
     end
-
   end
 end

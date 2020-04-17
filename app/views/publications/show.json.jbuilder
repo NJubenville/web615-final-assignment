@@ -1,1 +1,3 @@
-json.partial! "publications/publication", publication: @publication
+# frozen_string_literal: true
+
+json.partial! 'publications/publication', publication: @publication

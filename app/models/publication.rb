@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Publication < ApplicationRecord
   # Adds in the friendlyId into the model
   extend FriendlyId
