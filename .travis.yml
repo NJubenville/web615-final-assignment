@@ -9,9 +9,12 @@ services:
 
 before_install:
   - docker pull ruby
-  - docker pull postgres
+
   - docker run ruby
-  - docker run postgres --name testingCrap -e -d postgres POSTGRES_HOST_AUTH_METHOD=trust
+
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
 
 script:
   - sudo docker-compose exec guard rspec
