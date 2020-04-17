@@ -2,6 +2,16 @@ language: ruby
 rvm:
   - 2.6.0
 
+services:
+  - docker
+  - postgresql
+
+
+before_install:
+  - docker pull ruby
+  - docker pull postgres
+  - docker run ruby
+  - docker run postgres --name testingCrap -e POSTGRES_PASSWORD='' -d postgres
 
 script:
   - sudo docker-compose exec guard rspec

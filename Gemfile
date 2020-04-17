@@ -11,6 +11,7 @@ gem 'pundit' # Lab 10
 
 gem 'friendly_id', '~> 5.1.0' # Lab 9
 
+gem 'rails-html-sanitizer', '~> 1.0.3'
 
 gem 'travis'
 

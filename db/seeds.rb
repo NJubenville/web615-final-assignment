@@ -67,9 +67,9 @@ end
 
 def create_subscription(publication = create_publication, user = create_seed_user)
   subscription = Subscription.new
-  subscription.title = publication.title + ' Subscription'
+  subscription.title = publication.title
   subscription.publication = publication
-  #subscription.user_ids = user.id
+  subscription.user_ids = user.id
   if subscription.save
     p "Subscription #{subscription.title} has been saved"
   else
