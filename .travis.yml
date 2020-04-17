@@ -2,8 +2,6 @@ language: ruby
 rvm:
   - 2.6.0
 
-before_script:
-  - bin/setup
 
 script:
   - sudo docker-compose exec guard rspec
