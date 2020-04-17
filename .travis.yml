@@ -9,8 +9,10 @@ services:
 
 before_install:
   - docker pull ruby
-
   - docker run ruby
+  - docker build -t carlad/sinatra .
+  - docker run -d -p 127.0.0.1:80:4567 carlad/sinatra /bin/sh -c "cd /root/sinatra; bundle exec foreman start";
+  - docker ps -a
 
 
 before_script:

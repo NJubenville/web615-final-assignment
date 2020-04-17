@@ -386,7 +386,7 @@ DEPENDENCIES
   rack-tracker
   rails (~> 5.1)
   rails-erd
-  rails-html-sanitizer (~> 1.0.3)
+  rails-html-sanitizer
   rails_12factor
   rspec-rails (~> 3.7)
   rubocop
