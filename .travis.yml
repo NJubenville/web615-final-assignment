@@ -11,7 +11,7 @@ before_install:
   - docker pull ruby
   - docker pull postgres
   - docker run ruby
-  - docker run postgres --name testingCrap -e POSTGRES_PASSWORD='' -d postgres POSTGRES_HOST_AUTH_METHOD=trust
+  - docker run postgres --name testingCrap -e -d postgres POSTGRES_HOST_AUTH_METHOD=trust
 
 script:
   - sudo docker-compose exec guard rspec
