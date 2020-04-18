@@ -83,25 +83,28 @@ User.all.destroy_all
 
 (1..5).each do |_i|
   user = create_seed_user
-  next unless user.save
+  if user.save
 
   (1..5).each do |_i|
     publication = create_publication
-    next unless publication.save
+    if publication.save
 
     subscription = create_subscription(publication, user)
-    next unless subscription.save
+    if subscription.save
 
     (1..5).each do |_iii|
       article = create_article(publication)
-      next unless article.save
+      if article.save
 
       (1..5).each do |_iv|
         create_comment(article)
-      end
+              end
+            end
+          end
+        end
+      end 
     end
   end
 end
-
 # This is to create the admin users
 create_seed_user(true, 'Andrew', 'Raymer', 'AndrewRaymer@example.com')
