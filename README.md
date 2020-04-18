@@ -28,3 +28,5 @@
 6. [Fork My Code](https://github.com/NJubenville/web615-final-assignment-base)
 7. In the root of the project. run ```bin/setup```
 8. After that all thats need to rebuild your Docker is ```docker-compose up```
+
+**Completed tasks:**4.1, 4.2, 4.3, 4.4, 4.5, 4.5, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 7, 8.1, 8.2, 12, 13
