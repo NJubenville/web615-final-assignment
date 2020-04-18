@@ -45,7 +45,7 @@ def create_comment(article = create_article, user = create_seed_user)
   comment.user = user
   if comment.save
     comment
-    p "Comment #{comment.uuid} has been saved for article #{article.title}"
+    p " #{comment.uuid} has been saved for article #{article.title}"
   else
     raise comment.errors.full_messages.to_s
   end
@@ -55,7 +55,7 @@ def create_publication
   publication = Publication.new
   publication.title = Faker::Lorem.word
   if publication.save
-    p "Publication #{publication.title} has been saved"
+    p " #{publication.title} has been saved"
   else
     raise publication.errors.full_messages.to_s
   end
@@ -68,7 +68,7 @@ def create_subscription(publication = create_publication, user = create_seed_use
   subscription.publication = publication
   subscription.user_ids = user.id
   if subscription.save
-    p "Subscription #{subscription.title} has been saved"
+    p " #{subscription.title} has been saved"
   else
     raise subscription.errors.full_messages.to_s
   end
@@ -102,7 +102,7 @@ User.all.destroy_all
             end
           end
         end
-      end 
+      end
     end
   end
 end
